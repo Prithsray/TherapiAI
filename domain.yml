@@ -1,0 +1,48 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - mood_great
+  - mood_unhappy
+  - inform_problem
+  - ask_advice
+  - express_gratitude
+  - ask_exercise
+
+entities:
+  - problem
+
+slots:
+  problem:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: problem
+
+responses:
+  utter_greet:
+    - text: "Hello! How can I help you today?"
+
+  utter_goodbye:
+    - text: "Goodbye! Take care."
+
+  utter_happy:
+    - text: "That's great to hear!"
+
+  utter_sad:
+    - text: "I'm sorry to hear that. What's bothering you?"
+
+  utter_ask_problem:
+    - text: "Can you tell me more about your problem?"
+
+  utter_gratitude:
+    - text: "You're welcome! I'm here to help anytime."
+
+  utter_exercise:
+    - text: "Here are some exercises to help with stress: deep breathing, meditation, and light physical exercise like walking or yoga. Would you like to try one of these?"
+
+actions:
+  - action_provide_support
+  - action_give_advice
+  - action_set_problem_slot
