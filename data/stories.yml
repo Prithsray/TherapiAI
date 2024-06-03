@@ -41,3 +41,8 @@ stories:
   steps:
   - intent: ask_exercise
   - action: utter_exercise
+
+- story: bot challenge path
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot

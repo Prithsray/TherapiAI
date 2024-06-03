@@ -9,6 +9,7 @@ intents:
   - ask_advice
   - express_gratitude
   - ask_exercise
+  - bot_challenge
 
 entities:
   - problem
@@ -41,6 +42,9 @@ responses:
 
   utter_exercise:
     - text: "Here are some exercises to help with stress: deep breathing, meditation, and light physical exercise like walking or yoga. Would you like to try one of these?"
+
+  utter_iamabot:
+    - text: "I am a bot, here to assist you!"
 
 actions:
   - action_provide_support
