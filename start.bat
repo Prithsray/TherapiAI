@@ -10,7 +10,5 @@ rem Change directory to the UI folder
 cd rasa-web-ui
 
 rem Start UI server
-start python -m http.server 8000
+python app.py
 
-rem Change directory back to the original directory
-cd ..

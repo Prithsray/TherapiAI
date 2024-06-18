@@ -35,6 +35,8 @@ nlu:
     - I am stressed about [work](problem)
     - I am anxious about [exams](problem)
     - I have issues with [relationships](problem)
+    - I am overwhelmed by [deadlines](problem)
+    - I am concerned about [health](problem)
 
 - intent: ask_advice
   examples: |
@@ -42,6 +44,8 @@ nlu:
     - Can you help me with something?
     - I need your opinion
     - Can I ask for your advice?
+    - What do you think about [this](topic)?
+    - What should I do about [this](problem)?
 
 - intent: express_gratitude
   examples: |
@@ -57,3 +61,26 @@ nlu:
     - Can you suggest some relaxation techniques?
     - How can I calm myself down?
     - What are some good stress relief exercises?
+    - Any tips for relaxation?
+    - How can I stay calm under pressure?
+
+- intent: ask_fun_fact
+  examples: |
+    - Tell me a fun fact
+    - Share something interesting
+    - Do you know any fun facts?
+    - Give me an interesting fact
+
+- intent: ask_motivation
+  examples: |
+    - I need some motivation
+    - Can you motivate me?
+    - Give me some motivational quotes
+    - How can I get motivated?
+
+- intent: ask_joke
+  examples: |
+    - Tell me a joke
+    - Make me laugh
+    - Do you know any jokes?
+    - I need a good laugh

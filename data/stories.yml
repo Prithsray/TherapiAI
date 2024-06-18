@@ -11,38 +11,58 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
-- story: happy path
+- story: user is happy
   steps:
   - intent: mood_great
   - action: utter_happy
 
-- story: sad path
+- story: user is unhappy
   steps:
   - intent: mood_unhappy
   - action: utter_sad
 
-- story: inform problem
+- story: user asks for advice
+  steps:
+  - intent: ask_advice
+  - action: action_give_advice
+
+- story: user asks for exercises
+  steps:
+  - intent: ask_exercise
+  - action: utter_exercise
+
+- story: user asks for fun fact
+  steps:
+  - intent: ask_fun_fact
+  - action: utter_fun_fact
+
+- story: user asks for motivation
+  steps:
+  - intent: ask_motivation
+  - action: utter_motivation
+
+- story: user asks for joke
+  steps:
+  - intent: ask_joke
+  - action: utter_joke
+
+- story: user informs problem
   steps:
   - intent: inform_problem
   - action: action_set_problem_slot
   - action: action_provide_support
 
-- story: ask for advice
+- story: user asks for motivation
   steps:
-  - intent: ask_advice
-  - action: action_give_advice
+  - intent: ask_motivation
+  - action: action_provide_motivation
 
-- story: express gratitude
+- story: user asks for joke
   steps:
-  - intent: express_gratitude
-  - action: utter_gratitude
+  - intent: ask_joke
+  - action: action_tell_joke
 
-- story: ask for exercise
+- story: user asks for fun fact
   steps:
-  - intent: ask_exercise
-  - action: utter_exercise
-
-- story: bot challenge path
-  steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+  - intent: ask_fun_fact
+  - action: action_fun_fact

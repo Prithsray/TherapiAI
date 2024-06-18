@@ -40,5 +40,18 @@
 #  username: username
 #  password: password
 #  queue: queue
+# Action server
 action_endpoint:
   url: "http://localhost:5055/webhook"
+
+# Tracker store
+tracker_store:
+  type: SQL
+  dialect: "sqlite"
+  db: "tracker.db"  # Path to your SQLite database file
+  # The following are optional
+  username: null
+  password: null
+  url: null
+
+
