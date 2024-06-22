@@ -16,7 +16,7 @@ def deleteddb():
     conn.commit()
     conn.close()
 
-deleteddb()
+#deleteddb()
 
 
 def create_db():
