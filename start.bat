@@ -1,7 +1,7 @@
 @echo off
 
 rem Start Rasa server
-start rasa run --cors "*" --enable-api --debug
+start rasa run 
 
 rem Start Rasa action server
 start rasa run actions --debug
