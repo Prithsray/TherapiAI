@@ -10,47 +10,10 @@ stories:
   steps:
   - intent: goodbye
   - action: utter_goodbye
-
-- story: user is happy
-  steps:
-  - intent: mood_great
-  - action: utter_happy
-
-- story: user is unhappy
-  steps:
-  - intent: mood_unhappy
-  - action: utter_sad
-
 - story: user asks for advice
   steps:
   - intent: ask_advice
   - action: action_give_advice
-
-- story: user asks for exercises
-  steps:
-  - intent: ask_exercise
-  - action: utter_exercise
-
-- story: user asks for fun fact
-  steps:
-  - intent: ask_fun_fact
-  - action: utter_fun_fact
-
-- story: user asks for motivation
-  steps:
-  - intent: ask_motivation
-  - action: utter_motivation
-
-- story: user asks for joke
-  steps:
-  - intent: ask_joke
-  - action: utter_joke
-
-- story: user informs problem
-  steps:
-  - intent: inform_problem
-  - action: action_set_problem_slot
-  - action: action_provide_support
 
 - story: user asks for motivation
   steps:
@@ -66,3 +29,92 @@ stories:
   steps:
   - intent: ask_fun_fact
   - action: action_fun_fact
+
+- story: user informs problem
+  steps:
+  - intent: inform_problem
+  - action: action_set_problem_slot
+  - action: action_provide_support
+
+- story: user asks for relaxation techniques
+  steps:
+  - intent: ask_relaxation
+  - action: action_suggest_relaxation
+
+- story: user asks for self-care activities
+  steps:
+  - intent: ask_self_care
+  - action: action_recommend_self_care
+
+- story: user check-in mood
+  steps:
+  - intent: check_in_mood
+  - action: action_check_in_mood
+
+- story: user asks for daily affirmation
+  steps:
+  - intent: ask_affirmation
+  - action: action_daily_affirmation
+
+- story: user asks for hobby suggestion
+  steps:
+  - intent: ask_hobby
+  - action: action_suggest_hobby
+
+- story: user asks for sleep tips
+  steps:
+  - intent: ask_sleep_tips
+  - action: action_sleep_tips
+
+- story: user asks for exercise tips
+  steps:
+  - intent: ask_exercise_tips
+  - action: action_exercise_tips
+
+- story: user asks for professional help resources
+  steps:
+  - intent: ask_resources
+  - action: action_offer_resources
+
+- story: user is happy and asks for a joke
+  steps:
+  - intent: mood_great
+  - action: utter_happy
+  - intent: ask_joke
+  - action: action_tell_joke
+
+- story: user is unhappy and asks for relaxation techniques
+  steps:
+  - intent: mood_unhappy
+  - action: utter_sad
+  - intent: ask_relaxation
+  - action: action_suggest_relaxation
+
+- story: user asks for self-care and affirmation
+  steps:
+  - intent: ask_self_care
+  - action: action_recommend_self_care
+  - intent: ask_affirmation
+  - action: action_daily_affirmation
+
+- story: user asks for exercise and sleep tips
+  steps:
+  - intent: ask_exercise_tips
+  - action: action_exercise_tips
+  - intent: ask_sleep_tips
+  - action: action_sleep_tips
+
+- story: user asks for fun fact and hobby suggestion
+  steps:
+  - intent: ask_fun_fact
+  - action: action_fun_fact
+  - intent: ask_hobby
+  - action: action_suggest_hobby
+
+- story: user informs problem and asks for resources
+  steps:
+  - intent: inform_problem
+  - action: action_set_problem_slot
+  - action: action_provide_support
+  - intent: ask_resources
+  - action: action_offer_resources

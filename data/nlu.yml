@@ -7,80 +7,168 @@ nlu:
     - hi
     - hey
     - good morning
+    - good afternoon
     - good evening
+    - hey there
+    - hi there
+    - hello there
 
 - intent: goodbye
   examples: |
-    - bye
     - goodbye
+    - bye
     - see you later
+    - talk to you later
+    - see you
+    - bye bye
+    - catch you later
     - take care
-
-- intent: mood_great
-  examples: |
-    - I am feeling great
-    - I am very happy
-    - I am feeling awesome
-    - I am feeling good
-
-- intent: mood_unhappy
-  examples: |
-    - I am feeling sad
-    - I am not feeling well
-    - I am feeling down
-    - I am unhappy
-
-- intent: inform_problem
-  examples: |
-    - I am stressed about [work](problem)
-    - I am anxious about [exams](problem)
-    - I have issues with [relationships](problem)
-    - I am overwhelmed by [deadlines](problem)
-    - I am concerned about [health](problem)
 
 - intent: ask_advice
   examples: |
     - I need some advice
-    - Can you help me with something?
-    - I need your opinion
-    - Can I ask for your advice?
-    - What do you think about [this](topic)?
-    - What should I do about [this](problem)?
-
-- intent: express_gratitude
-  examples: |
-    - thank you
-    - thanks
-    - I appreciate it
-    - Thanks a lot
-    - Thank you very much
-
-- intent: ask_exercise
-  examples: |
-    - What exercises can I do to reduce stress?
-    - Can you suggest some relaxation techniques?
-    - How can I calm myself down?
-    - What are some good stress relief exercises?
-    - Any tips for relaxation?
-    - How can I stay calm under pressure?
-
-- intent: ask_fun_fact
-  examples: |
-    - Tell me a fun fact
-    - Share something interesting
-    - Do you know any fun facts?
-    - Give me an interesting fact
+    - Can you give me some advice?
+    - I need help with something
+    - Can you advise me?
+    - What should I do?
+    - Do you have any advice for me?
+    - I could use some advice
+    - Give me some advice
 
 - intent: ask_motivation
   examples: |
     - I need some motivation
     - Can you motivate me?
-    - Give me some motivational quotes
-    - How can I get motivated?
+    - Give me a motivational quote
+    - Inspire me
+    - I need inspiration
+    - Can you inspire me?
+    - Motivate me please
 
 - intent: ask_joke
   examples: |
     - Tell me a joke
-    - Make me laugh
     - Do you know any jokes?
-    - I need a good laugh
+    - Make me laugh
+    - I want to hear a joke
+    - Tell me something funny
+    - Can you tell me a joke?
+
+- intent: ask_fun_fact
+  examples: |
+    - Tell me a fun fact
+    - Do you know any interesting facts?
+    - Give me a fun fact
+    - Share a fun fact with me
+    - Tell me something interesting
+    - Can you tell me a fun fact?
+
+- intent: inform_problem
+  examples: |
+    - I'm feeling stressed about [work](problem)
+    - I have an issue with [my relationship](problem)
+    - I'm worried about [my health](problem)
+    - I'm having trouble with [school](problem)
+    - I'm stressed about [money](problem)
+    - I have a problem with [my friend](problem)
+    - I'm anxious about [the future](problem)
+
+- intent: ask_relaxation
+  examples: |
+    - I need to relax
+    - Can you suggest relaxation techniques?
+    - How can I relax?
+    - Give me some relaxation tips
+    - I need to calm down
+    - Help me relax
+    - I want to relax
+
+- intent: ask_self_care
+  examples: |
+    - I need some self-care tips
+    - Can you recommend some self-care activities?
+    - How can I take care of myself?
+    - Give me self-care advice
+    - I want to practice self-care
+    - Suggest some self-care activities
+    - I need self-care
+
+- intent: check_in_mood
+  examples: |
+    - How are you feeling?
+    - How is your mood?
+    - Are you okay?
+    - How have you been?
+    - How are you doing today?
+    - What's your mood like?
+    - How do you feel?
+
+- intent: ask_affirmation
+  examples: |
+    - I need a daily affirmation
+    - Can you give me an affirmation?
+    - Give me a positive affirmation
+    - I need some positive words
+    - Tell me an affirmation
+    - Share a daily affirmation with me
+    - I want an affirmation
+
+- intent: ask_hobby
+  examples: |
+    - Suggest a hobby
+    - What hobby should I try?
+    - Can you recommend a hobby?
+    - I need a new hobby
+    - Give me some hobby ideas
+    - I want to try a new hobby
+    - Suggest something fun to do
+
+- intent: ask_sleep_tips
+  examples: |
+    - I need tips for better sleep
+    - How can I sleep better?
+    - Give me some sleep advice
+    - I want to improve my sleep
+    - Can you suggest ways to sleep better?
+    - Help me with my sleep
+    - I need help sleeping
+
+- intent: ask_exercise_tips
+  examples: |
+    - I need some exercise tips
+    - How can I exercise more?
+    - Give me some exercise advice
+    - I want to start exercising
+    - Can you suggest some exercises?
+    - Help me with exercise
+    - I need exercise tips
+
+- intent: ask_resources
+  examples: |
+    - I need professional help
+    - Can you provide mental health resources?
+    - Give me some help resources
+    - I need help resources
+    - Suggest some professional help
+    - I want to talk to a therapist
+    - Can you recommend some mental health services?
+
+- intent: mood_great
+  examples: |
+    - I'm feeling great
+    - I'm very happy
+    - I'm in a good mood
+    - I'm feeling awesome
+    - I'm so happy
+    - I'm doing well
+    - I'm feeling fantastic
+
+- intent: mood_unhappy
+  examples: |
+    - I'm feeling down
+    - I'm not feeling well
+    - I'm sad
+    - I'm unhappy
+    - I'm feeling depressed
+    - I'm not in a good mood
+    - I'm feeling bad

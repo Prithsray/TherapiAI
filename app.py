@@ -9,15 +9,15 @@ DATABASE = 'tracker.db'
 RASA_SERVER_URL = 'http://localhost:5005/webhooks/rest/webhook'  # Update this URL based on your Rasa server
 
 
-def deleteddb():
-    conn = sqlite3.connect(DATABASE)
-    c = conn.cursor()
-    c.execute('''DROP table events;''')
-    c.execute('''DROP table threads;''')  # Table for threads
-    conn.commit()
-    conn.close()
+# def deleteddb():
+#     conn = sqlite3.connect(DATABASE)
+#     c = conn.cursor()
+#     c.execute('''DROP table events;''')
+#     c.execute('''DROP table threads;''')  # Table for threads
+#     conn.commit()
+#     conn.close()
 
-deleteddb()
+# deleteddb()
 def create_db():
     """Create the SQLite database if it doesn't exist."""
     conn = sqlite3.connect(DATABASE)
@@ -25,7 +25,7 @@ def create_db():
     c.execute('''CREATE TABLE IF NOT EXISTS events 
                  (sender_id TEXT, event TEXT, text TEXT)''')
     c.execute('''CREATE TABLE IF NOT EXISTS threads
-                 (thread_id INTEGER PRIMARY KEY AUTOINCREMENT, sender_id TEXT)''')  # Table for threads
+                 (thread_id INTEGER PRIMARY KEY AUTOINCREMENT, thread_name TEXT)''')  # Table for threads
     conn.commit()
     conn.close()
 
@@ -53,6 +53,7 @@ def list_threads():
 def start_thread():
     try:
         sender_id = request.json.get('sender_id')
+        print(sender_id)
         # Check if the sender_id already exists
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
@@ -76,7 +77,7 @@ def end_thread():
         print(sender_id)
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
-        cursor.execute("DELETE FROM threads WHERE sender_id=?", (sender_id,))
+        cursor.execute("DELETE FROM threads WHERE thread_id=?", (sender_id,))
         # Optionally, you may want to delete messages associated with this sender_id from the events table
         cursor.execute("DELETE FROM events WHERE sender_id=?", (sender_id,))
         conn.commit()
@@ -104,7 +105,7 @@ def list_messages(sender_id):
 def webhook():
     try:
         data = request.get_json()
-        sender_id = data['sender']
+        sender_id = data['sender']   #sender_id== thread id in threads table
         message = data['message']
         print(message,sender_id)
         # Save user message to database
@@ -145,4 +146,4 @@ def save_message(sender_id, event, text):
         print(f"Error saving message: {e}")
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5055)
+    app.run(debug=True, port=5000)

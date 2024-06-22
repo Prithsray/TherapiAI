@@ -3,136 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rasa Chatbot</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: url("{{ url_for('static', filename='images/sketches-gradient-doodle-logo-wallpaper-preview.jpg') }}"); /* Gradient background for the body */
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
-        #chat-container {
-            width: 900px; /* Increased width */
-            height: 700px; /* Set a specific height */
-            max-width: 100%;
-            background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* More prominent shadow */
-            border-radius: 20px; /* Larger border radius */
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            backdrop-filter: blur(10px); /* Blur effect */
-        }
-
-        #chat-box {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            border-bottom: 1px solid #ddd;
-            background: #fff; /* Background image */
-            background-size: cover;
-        }
-
-        #user-input {
-            display: flex;
-            padding: 10px;
-            border-top: 1px solid #ddd;
-            background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
-            backdrop-filter: blur(5px); /* Blur effect */
-        }
-
-        #user-input input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            outline: none;
-        }
-
-        #user-input button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 20px;
-            margin-left: 10px;
-            cursor: pointer;
-            outline: none;
-            transition: background-color 0.3s ease;
-        }
-
-        #user-input button:hover {
-            background-color: #0056b3;
-        }
-
-        .message-container {
-            padding: 10px 20px;
-            border-radius: 20px;
-            margin-bottom: 10px;
-            max-width: 80%;
-            word-wrap: break-word;
-        }
-
-        .user-message {
-            background-color: #898c8f;
-            color: #fff;
-            align-self: flex-end;
-        }
-
-        .bot-message {
-            background-color: #7ee596;
-            color: #fff;
-            align-self: flex-start;
-        }
-
-        .message-text {
-            word-wrap: break-word;
-        }
-
-        /* Sidebar for threads */
-        #sidebar {
-            width: 300px;
-            background-color: #f0f0f0;
-            height: 100vh;
-            overflow-y:visible;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            left: 0;
-            padding: 20px;
-        }
-
-        .thread {
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            background-color: #e0e0e0;
-            transition: background-color 0.3s ease;
-        }
-
-        .thread:hover {
-            background-color: #d0d0d0;
-        }
-        .thread::selection {
-            background-color: #007bff;
-            color: #fff;
-        }
-    </style>
+    <title>Therapi AI</title>
+   
 </head>
 <body>
     <div id="sidebar">
+        <h1 style="font-family: Arial, sans-serif; font-weight: bold; color: #333; text-align: center;">Therapi AI</h1>
         <h2>Active Threads</h2>
-        
-        <div id="thread-list"></div>
         <button onclick="startNewThread()">Start New Thread</button>
-        <button onclick="endCurrentThread()">End Thread</button>
-
-
+        <button onclick="endCurrentThread()">Delete Thread</button>
+        <br><br>
+        <div id="thread-list"></div>
+        
+        
     </div>
 
     <div id="chat-container">
@@ -146,55 +31,44 @@
     <script>
         const chatBox = document.getElementById('chat-box');
         const threadList = document.getElementById('thread-list');
-        let currentThreadId = null; // Global variable to store current thread ID
+        let currentThreadId = null;
 
         function addMessage(message, fromUser = true) {
-        const messageElem = document.createElement('div');
-        messageElem.classList.add('message-container', fromUser ? 'user-message' : 'bot-message');
-        messageElem.innerHTML = `<span class="message-text">${message}</span>`;
-        chatBox.appendChild(messageElem);
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-        // Function to load active threads
+            const messageElem = document.createElement('div');
+            messageElem.classList.add('message-container', fromUser ? 'user-message' : 'bot-message');
+            messageElem.innerHTML = `<span class="message-text">${message}</span>`;
+            chatBox.appendChild(messageElem);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
         function loadThreads() {
             fetch('/list_threads')
                 .then(response => response.json())
                 .then(data => {
-                    // Display threads in the sidebar
                     threadList.innerHTML = '';
                     data.forEach(thread => {
                         const threadElem = document.createElement('div');
                         threadElem.classList.add('thread');
                         threadElem.setAttribute('data-thread-id', thread.thread_id);
                         threadElem.textContent = thread.sender_id;
-                        threadElem.addEventListener('click', () => {
-                            console.log("clicked",thread.sender_id);
-                            handleThreadSelection(thread.thread_id);
-                        });
+                        threadElem.addEventListener('click', () => handleThreadSelection(thread.thread_id));
                         threadList.appendChild(threadElem);
                     });
                 })
                 .catch(error => console.error('Error loading threads:', error));
         }
+
         function handleThreadSelection(threadId) {
-            currentThreadId = threadId; // Set the current thread ID globally
-            loadMessages(threadId); // Load messages for the selected thread
+            currentThreadId = threadId;
+            loadMessages(threadId);
+            const threads = document.querySelectorAll('.thread');
+            threads.forEach(thread => {
+                thread.classList.toggle('selected', thread.getAttribute('data-thread-id') === threadId);
+            });
         }
 
         function startNewThread() {
-    const senderId = 'session_' + Math.random().toString(36).substr(2, 9);
-    startThread(senderId);
-}
-
-function endCurrentThread() {
-            if (currentThreadId) {
-                endThread(currentThreadId);
-            }
-        }
-
-
-        // Function to start a new thread
-        function startThread(senderId) {
+            const senderId = 'session_' + Math.random().toString(36).substr(2, 9);
             fetch('/start_thread', {
                 method: 'POST',
                 headers: {
@@ -205,122 +79,71 @@ function endCurrentThread() {
             .then(response => response.json())
             .then(data => {
                 console.log('Thread started successfully:', data);
-                loadThreads(); // Reload threads after starting a new one
+                loadThreads();
             })
             .catch(error => console.error('Error starting thread:', error));
         }
 
-        
-
-        function loadMessages(senderId) {
-            console.log("loadmessage");
-            fetch(`/list_messages/${senderId}`)
+        function endCurrentThread() {
+            if (currentThreadId) {
+                fetch('/end_thread', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ sender_id: currentThreadId })
+                })
                 .then(response => response.json())
                 .then(data => {
-                    // Display messages in the chat box
+                    console.log('Thread ended successfully:', data);
+                    currentThreadId = null;
+                    chatBox.innerHTML = ''; // Clear chat box when thread is ended
+                    loadThreads();
+                })
+                .catch(error => console.error('Error ending thread:', error));
+            }
+        }
+
+        function loadMessages(threadId) {
+            fetch(`/list_messages/${threadId}`)
+                .then(response => response.json())
+                .then(data => {
                     chatBox.innerHTML = '';
                     data.forEach(message => {
-                        const messageElem = document.createElement('div');
-                        messageElem.classList.add('message-container', message.event === 'user' ? 'user-message' : 'bot-message');
-                        messageElem.innerHTML = `<span class="message-text">${message.text}</span>`;
-                        chatBox.appendChild(messageElem);
-                    });
-
-                    // Highlight the selected thread
-                    const threads = document.querySelectorAll('.thread');
-                    threads.forEach(thread => {
-                        if (thread.getAttribute('data-thread-id') === senderId) {
-                            thread.classList.add('selected');
-                        } else {
-                            thread.classList.remove('selected');
-                        }
+                        addMessage(message.text, message.event === 'user');
                     });
                 })
                 .catch(error => console.error('Error loading messages:', error));
         }
 
-        // Function to end a thread
-        function endThread(senderId) {
-            fetch('/end_thread', {
+        function sendMessage() {
+            const userMessageElem = document.getElementById('user-message');
+            const message = userMessageElem.value.trim();
+            if (!message) return;
+
+            addMessage(message, true);
+            userMessageElem.value = '';
+
+            const senderId = currentThreadId || 'session_' + Math.random().toString(36).substr(2, 9);
+            if (!currentThreadId) startThread(senderId);
+
+            fetch('/webhook', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ sender_id: senderId })
+                body: JSON.stringify({ sender: senderId, message: message })
             })
             .then(response => response.json())
             .then(data => {
-                console.log('Thread ended successfully:', data);
-                loadThreads(); // Reload threads after ending one
+                data.forEach(botResponse => {
+                    addMessage(botResponse.text, false);
+                });
             })
-            .catch(error => console.error('Error ending thread:', error));
+            .catch(error => console.error('Error:', error));
         }
 
-        // Function to load messages for a specific thread
-        function loadMessages(senderId) {
-            fetch(`/list_messages/${senderId}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Display messages in the chat box
-                    chatBox.innerHTML = '';
-                    data.forEach(message => {
-                        const messageElem = document.createElement('div');
-                        messageElem.classList.add('message-container', message.event === 'user' ? 'user-message' : 'bot-message');
-                        messageElem.innerHTML = `<span class="message-text">${message.text}</span>`;
-                        chatBox.appendChild(messageElem);
-                    });
-                })
-                .catch(error => console.error('Error loading messages:', error));
-        }
-
-        // Function to send a message
-        function sendMessage() {
-    const userMessageElem = document.getElementById('user-message');
-    const message = userMessageElem.value.trim();
-    if (!message) return;
-
-    addMessage(message, true);
-    userMessageElem.value = '';
-
-    // Get the selected thread (if any) from the sidebar
-    
-            // If no existing threads, start a new one
-            let senderId = currentThreadId; // Use the current thread ID
-
-            // If no thread is selected, start a new one
-            if (!senderId) {
-                senderId = 'session_' + Math.random().toString(36).substr(2, 9);
-                startThread(senderId); // Start a new thread for the new session
-            }
-            //startThread(senderId); // Start a new thread for the new session
-       
-
-    // Send the message to Flask server
-    fetch('/webhook', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ sender: senderId, message: message }),
-        mode: 'cors',
-        credentials: 'same-origin',
-    })
-    .then(response => response.json())
-    .then(data => {
-        data.forEach(botResponse => {
-            addMessage(botResponse.text, false);
-        });
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-
-
-        // Load active threads when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            loadThreads();
-        });
+        document.addEventListener('DOMContentLoaded', loadThreads);
     </script>
 </body>
 </html>
