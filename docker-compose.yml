@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  rasa_flask:
+    build: .
+    ports:
+      - "5005:5005"
+      - "5055:5055"
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
