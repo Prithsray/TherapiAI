@@ -1,5 +1,3 @@
-/* styles.css */
-
 /* Body styling */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -96,13 +94,71 @@ body {
 /* Sidebar for threads */
 #sidebar {
     width: 300px;
-    background-color: rgba(206, 197, 197, 0.9); /* Semi-transparent background */
+    background-color: rgba(206, 197, 197, 0.6); /* Semi-transparent background */
     height: 100vh;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: fixed;
     left: 0;
-    padding: 20px;
+    overflow-y: auto;
+    backdrop-filter: blur(1px); /* Frosted glass effect */
+}
+
+#thread-list {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* Styling for conversation buttons */
+.convo-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.convo-buttons button {
+    flex: 1;
+    padding: 10px;
+    background-color: #169e5c;
+    color: #fff;
+    border: none;
+    
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 0 5px;
+}
+
+.convo-buttons button:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+/* Styling for auth buttons */
+.auth-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.auth-buttons button {
+    flex: 1;
+    padding: 10px;
+    background-color: #13710c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 0 5px;
+}
+
+.auth-buttons button:hover {
+    background-color: #82d592;
+    transform: scale(1.05);
 }
 
 .thread {
@@ -115,7 +171,7 @@ body {
 }
 
 .thread:hover {
-    background-color: #d0d0d0;
+    background-color: #b2aeae;
 }
 
 .thread.selected {

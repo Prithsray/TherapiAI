@@ -8,12 +8,19 @@
 </head>
 <body>
     <div id="sidebar">
-        <h1>Therapi AI</h1>
-        <h2>Active Threads</h2>
-        <button onclick="startNewThread().then(handleThreadSelection)">Start New Conversation</button>
-        <button onclick="endCurrentThread()">Delete Conversation</button>
-        <br><br>
+        <h1 style="color: white;align-self: center;">Therapi AI</h1> <br>
+       
+        <div class="convo-buttons">
+            <button onclick="startNewThread().then(handleThreadSelection)">Start New Conversation</button>
+            <button onclick="endCurrentThread()">Delete Conversation</button>
+        </div>
+        <h2>Your Conversations</h2>
         <div id="thread-list"></div>
+        <div class="auth-buttons">
+            <button onclick="">Login</button>
+            <button onclick="">Register</button>
+        </div>
+        <br>
     </div>
 
     <div id="chat-container">
