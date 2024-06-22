@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # Configure SQLite database for storing chat history and threads
 DATABASE = 'tracker.db'
-RASA_SERVER_URL = 'http://therapiai.onrender.com/webhooks/rest/webhook'  # Update this URL based on your Rasa server
+RASA_SERVER_URL = 'http://localhost:5005/webhooks/rest/webhook'  # Update this URL based on your Rasa server
 
 def deleteddb():
     conn = sqlite3.connect(DATABASE)
