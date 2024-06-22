@@ -4,20 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
     <title>Therapi AI</title>
-   
 </head>
 <body>
     <div id="sidebar">
-        <h1 style="font-family: Arial, sans-serif; font-weight: bold; color: #333; text-align: center;">Therapi AI</h1>
+        <h1>Therapi AI</h1>
         <h2>Active Threads</h2>
-        <button onclick="startNewThread()">Start New Thread</button>
-        <button onclick="endCurrentThread()">Delete Thread</button>
+        <button onclick="startNewThread().then(handleThreadSelection)">Start New Conversation</button>
+        <button onclick="endCurrentThread()">Delete Conversation</button>
         <br><br>
         <div id="thread-list"></div>
-        
-        
     </div>
 
     <div id="chat-container">
@@ -50,7 +46,7 @@
                         const threadElem = document.createElement('div');
                         threadElem.classList.add('thread');
                         threadElem.setAttribute('data-thread-id', thread.thread_id);
-                        threadElem.textContent = thread.sender_id;
+                        threadElem.textContent = thread.thread_name;
                         threadElem.addEventListener('click', () => handleThreadSelection(thread.thread_id));
                         threadList.appendChild(threadElem);
                     });
@@ -59,6 +55,7 @@
         }
 
         function handleThreadSelection(threadId) {
+            console.log("handler entered");
             currentThreadId = threadId;
             loadMessages(threadId);
             const threads = document.querySelectorAll('.thread');
@@ -68,20 +65,27 @@
         }
 
         function startNewThread() {
-            const senderId = 'session_' + Math.random().toString(36).substr(2, 9);
-            fetch('/start_thread', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ sender_id: senderId })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Thread started successfully:', data);
-                loadThreads();
-            })
-            .catch(error => console.error('Error starting thread:', error));
+            return new Promise((resolve, reject) => {
+                console.log("start thread entered");
+                const threadName = 'Thread ' + Math.random().toString(36).substr(2, 5);
+                fetch('/start_thread', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ thread_name: threadName })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    loadThreads();
+                    const newThreadId = data.thread_id;
+                    resolve(newThreadId);
+                })
+                .catch(error => {
+                    console.error('Error starting thread:', error);
+                    reject(error);
+                });
+            });
         }
 
         function endCurrentThread() {
@@ -91,11 +95,10 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ sender_id: currentThreadId })
+                    body: JSON.stringify({ thread_id: currentThreadId })
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Thread ended successfully:', data);
                     currentThreadId = null;
                     chatBox.innerHTML = ''; // Clear chat box when thread is ended
                     loadThreads();
@@ -124,23 +127,44 @@
             addMessage(message, true);
             userMessageElem.value = '';
 
-            const senderId = currentThreadId || 'session_' + Math.random().toString(36).substr(2, 9);
-            if (!currentThreadId) startThread(senderId);
-
-            fetch('/webhook', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ sender: senderId, message: message })
-            })
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(botResponse => {
-                    addMessage(botResponse.text, false);
-                });
-            })
-            .catch(error => console.error('Error:', error));
+            if (!currentThreadId) {
+                startNewThread()
+                    .then(newThreadId => {
+                        handleThreadSelection(newThreadId);
+                        return newThreadId;
+                    })
+                    .then(threadId => {
+                        fetch('/webhook', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ thread_id: threadId, message: message })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(botResponse => {
+                                addMessage(botResponse.text, false);
+                            });
+                        })
+                        .catch(error => console.error('Error:', error));
+                    });
+            } else {
+                fetch('/webhook', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ thread_id: currentThreadId, message: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(botResponse => {
+                        addMessage(botResponse.text, false);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+            }
         }
 
         document.addEventListener('DOMContentLoaded', loadThreads);
