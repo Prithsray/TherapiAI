@@ -14,4 +14,4 @@ COPY . .
 EXPOSE 5005 5055 8000
 
 # Run entrypoint script
-CMD ["/entrypoint.sh"]
+CMD ["entrypoint.sh"]
