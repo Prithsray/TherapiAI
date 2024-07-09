@@ -27,9 +27,7 @@ entities:
 slots:
   problem:
     type: text
-    mappings:
-      - type: from_entity
-        entity: problem
+    
 
 responses:
   utter_greet:
